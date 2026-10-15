@@ -45,7 +45,15 @@ Saat program pertama kali di run, sistem akan memberikan output menu utama yang 
 <img width="550" height="458" alt="image" src="https://github.com/user-attachments/assets/dc8e658d-1043-42ec-b2b9-517ab34904a4" />
 
 
-<p>Setiap peminjaman alat akan memengaruhi stok. Dapat dilihat sebagai contoh, setelah petugas meminjam 7 labu erlenmeyer, stoknya berubah dari 10 menjadi 3.</p>
+<p>Setiap peminjaman alat akan memengaruhi stok. Dapat dilihat sebagai contoh, setelah petugas meminjam 2 gelas beaker, stoknya berubah dari 5 menjadi 3.</p>
+<img width="405" height="156" alt="image" src="https://github.com/user-attachments/assets/1a4585df-662f-41d5-80a8-0daaba9d70b7" />
+<img width="357" height="151" alt="image" src="https://github.com/user-attachments/assets/f45bbcee-b4bf-4f71-b3a3-991122cd829c" />
+
+<p>Program ini memiliki pembatasan dalam proses peminjaman alat. Jika petugas mencoba meminjam alat yang tidak ada dalam daftar alat pada menu 1, sistem akan menampilkan pemberitahuan bahwa alat tersebut tidak ditemukan.</p>
+
+<img width="484" height="437" alt="image" src="https://github.com/user-attachments/assets/2eeec3f0-752c-427a-8f30-27a1e953cdb0" />
+
+<p>Selain itu juga, jika petugas memasukkan jumlah peminjaman yang melebihi stok yang tersedia, sistem akan menampilkan peringatan bahwa stok alat tidak mencukupi dan menunjukkan jumlah stok yang tersedia.</p>
 
 ---
 
