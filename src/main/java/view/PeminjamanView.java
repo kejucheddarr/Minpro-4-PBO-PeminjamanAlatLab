@@ -4,8 +4,10 @@
  */
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import model.Peminjaman;
+import model.AlatLab;
 
 /**
  *
@@ -13,7 +15,7 @@ import model.Peminjaman;
  */
 public interface PeminjamanView {
     void tampilkanMenu();
-    void tampilkanDaftarAlat();
+    void tampilkanDaftarAlat(ArrayList<AlatLab> daftar);
     Peminjaman inputPeminjaman(Scanner scanner);
     int inputIdPeminjaman(Scanner scanner);
     void tampilkanPeminjaman(Peminjaman peminjaman);

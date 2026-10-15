@@ -6,9 +6,10 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import model.AlatLab;
+import model.AlatGelas;
 import model.AlatBedah;
 import model.AlatUkur;
-import model.AlatGelas;
 import model.Peminjaman;
 
 /**
@@ -17,14 +18,7 @@ import model.Peminjaman;
  */
 public class PeminjamanViewImp implements PeminjamanView {
     
-    private final ArrayList<AlatGelas> rakGelas;
-    private final ArrayList<AlatBedah> rakBedah;
-    private final ArrayList<AlatUkur> rakUkur;
-    
-    public PeminjamanViewImp(ArrayList<AlatGelas> rakGelas, ArrayList<AlatBedah> rakBedah, ArrayList<AlatUkur> rakUkur){
-        this.rakGelas = rakGelas;
-        this.rakBedah = rakBedah;
-        this.rakUkur = rakUkur;
+    public PeminjamanViewImp(){
     }
     
     @Override
@@ -42,22 +36,28 @@ public class PeminjamanViewImp implements PeminjamanView {
     }
     
     @Override
-    public void tampilkanDaftarAlat(){
+    public void tampilkanDaftarAlat(ArrayList<AlatLab> daftar){
         System.out.println("\n=== Daftar Alat Laboratorium ===");
         System.out.println("\n---------- Alat Gelas ----------");
-        for (AlatGelas a : rakGelas) {
-            a.tampilkanInfo();
-            System.out.println("--------------------------------");
+        for (AlatLab a : daftar) {
+            if(a instanceof AlatGelas){
+                a.tampilkanInfo();
+                System.out.println("--------------------------------");
+            }
         }
         System.out.println("\n---------- Alat Bedah ----------");
-        for (AlatBedah a : rakBedah) {
-            a.tampilkanInfo();
-            System.out.println("--------------------------------");
+        for (AlatLab a : daftar) {
+            if(a instanceof AlatBedah){
+                a.tampilkanInfo();
+                System.out.println("--------------------------------");
+            }
         }
         System.out.println("\n---------- Alat Ukur -----------");
-        for (AlatUkur a : rakUkur) {
-            a.tampilkanInfo();
-            System.out.println("--------------------------------");
+        for (AlatLab a : daftar) {
+            if(a instanceof AlatUkur){
+                a.tampilkanInfo();
+                System.out.println("--------------------------------");
+            }
         }
     }
     
@@ -139,7 +139,7 @@ public class PeminjamanViewImp implements PeminjamanView {
     @Override
     public void tampilkanPeminjaman(Peminjaman p){
         System.out.println("\n---------- Riwayat Peminjaman ----------");
-        System.out.println("ID Peminjaman :" + p.getIdPeminjaman());
+        System.out.println("ID Peminjaman: " + p.getIdPeminjaman());
         System.out.println("Nama Petugas: " + p.getNamaPetugas());
         System.out.println("Nama Alat: " + p.getNamaAlat());
         System.out.println("Jumlah Pinjam: " + p.getJumlahPinjam());

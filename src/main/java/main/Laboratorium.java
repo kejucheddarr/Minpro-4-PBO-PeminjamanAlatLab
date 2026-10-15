@@ -5,10 +5,6 @@
 package main;
 
 import java.util.Scanner;
-import java.util.ArrayList;
-import model.AlatBedah;
-import model.AlatUkur;
-import model.AlatGelas;
 import service.PeminjamanService;
 import view.PeminjamanView;
 import view.PeminjamanViewImp;
@@ -20,33 +16,22 @@ import controller.PeminjamanController;
  */
 public class Laboratorium {
     public static void main(String [] args) {
-        ArrayList<AlatBedah> rakBedah = new ArrayList<>();
-        ArrayList<AlatUkur> rakUkur = new ArrayList<>();
-        ArrayList<AlatGelas> rakGelas = new ArrayList<>();
-
-        rakGelas.add(new AlatGelas(1, "Labu Erlenmeyer", "Baik", 10, "250 mL"));
-        rakGelas.add(new AlatGelas(2, "Gelas Beaker", "Baik", 5, "500 mL"));
-
-        rakBedah.add(new AlatBedah(3, "Scalpel", "Baik", 5, "Pemotong"));
-        rakBedah.add(new AlatBedah(4, "Forceps", "Baik", 3, "Penjepit"));
-
-        rakUkur.add(new AlatUkur(5, "Jangka Sorong", "Baik", 2, "Panjang"));
-        rakUkur.add(new AlatUkur(6, "Termometer", "Baik", 4, "Suhu"));
-        
         Scanner scanner = new Scanner(System.in);
         
         PeminjamanService service = new PeminjamanService();
         
-        PeminjamanView view = new PeminjamanViewImp(rakGelas, rakBedah, rakUkur);
+        PeminjamanView view = new PeminjamanViewImp();
         
-        PeminjamanController controller = new PeminjamanController(service, view, rakGelas, rakBedah, rakUkur);
+        PeminjamanController controller = new PeminjamanController(service, view);
         
         boolean berjalan = true;
         while (berjalan) {
             view.tampilkanMenu();
+            
             try {
                 int pilihan = scanner.nextInt();
                 scanner.nextLine();
+                
                 //opsii
                 switch (pilihan){
                     case 1 ->{

@@ -4,11 +4,14 @@
  */
 package service;
 
-import model.Peminjaman;
+import dao.Koneksi;
+import dao.AlatLabDAO;
+import dao.PeminjamanDAO;
 import model.AlatLab;
-import model.AlatBedah;
-import model.AlatUkur;
-import model.AlatGelas;
+import model.Peminjaman;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,118 +19,184 @@ import java.util.ArrayList;
  * @author HP
  */
 public class PeminjamanService {
-    protected final ArrayList<Peminjaman> daftarPeminjaman = new ArrayList<>();
+    private final AlatLabDAO alatDAO = new AlatLabDAO();
+    private final PeminjamanDAO peminjamanDAO = new PeminjamanDAO();
     
-    public ArrayList<Peminjaman> getDaftarPeminjaman() {
-        return daftarPeminjaman;
+    public ArrayList<AlatLab> getDaftarAlat(){
+        return alatDAO.getSemuaAlat();
     }
     
-    public void tambahPeminjaman(Peminjaman peminjaman, ArrayList<AlatGelas> rakGelas, ArrayList<AlatBedah> rakBedah, ArrayList<AlatUkur> rakUkur) {
-        if (peminjaman == null) {
+    public ArrayList<Peminjaman> getDaftarPeminjaman(){
+        return peminjamanDAO.getSemuaPeminjaman();
+    }
+    
+    public void tambahPeminjaman(Peminjaman p){
+        if(p == null){
             System.out.println(">> Data peminjaman tidak boleh kosong.");
             return;
         }
-        if (peminjaman.getJumlahPinjam() <= 0) {
+        if(p.getIdPeminjaman() <= 0){
+            System.out.println("ID Peminjaman harus lebih dari 0.");
+            return;
+        }
+        if(p.getNamaPetugas() == null || p.getNamaPetugas().trim().isEmpty()){
+            System.out.println(">> Nama petugas tidak boleh kosong.");
+            return;
+        }
+        if(p.getNamaAlat() == null || p.getNamaAlat().trim().isEmpty()){
+            System.out.println(">> Nama alat tidak boleh kosong.");
+            return;
+        }
+        if(p.getJumlahPinjam() <= 0){
             System.out.println(">> Jumlah pinjam harus lebih dari 0.");
             return;
         }
-        
-        AlatLab alat = cariAlat(peminjaman.getNamaAlat(), rakGelas, rakBedah, rakUkur);
-        
-        if (alat == null) {
-            System.out.println(">> Alat tidak ditemukan.");
-            return;
+        try(Connection conn = Koneksi.getConnection()){
+            if(conn == null){
+                System.out.println(">> Koneksi database gagal.");
+                return;
+            }
+            conn.setAutoCommit(false);
+            try{
+                int idAlat = alatDAO.cariIdAlat(conn, p.getNamaAlat());
+                if (idAlat == -1){
+                    conn.rollback();
+                    System.out.println(">> Alat tidak ditemukan.");
+                    return;
+                }
+                
+                boolean stokBerhasil = alatDAO.kurangiStok(conn, idAlat, p.getJumlahPinjam());
+                
+                if(!stokBerhasil){
+                    conn.rollback();
+                    System.out.println(">> Stok tidak mencukupi.");
+                    return;
+                }
+                
+                boolean simpanBerhasil = peminjamanDAO.simpan(conn, p, idAlat);
+                
+                if(!simpanBerhasil){
+                    conn.rollback();
+                    System.out.println(">> Peminjaman gagal disimpan.");
+                    return;
+                }
+                
+                conn.commit();
+                
+                System.out.println(">> Peminjaman berhasil ditambahkan!");
+                System.out.println(">> Stok alat berhasil diperbarui.");
+            }catch(SQLException e){
+                conn.rollback();
+                System.out.println(">> Peminjaman gagal: " + e.getMessage());
+            }finally{
+                conn.setAutoCommit(true);
+            }
+        }catch(SQLException e){
+            System.out.println(">> Koneksi database gagal: " + e.getMessage());
         }
-        if (peminjaman.getJumlahPinjam() > alat.getStok()) {
-            System.out.println(">> Stok alat tidak mencukupi.");
-            System.out.println(">> Stok tersedia: " + alat.getStok());
-            return;
-        }
-        
-        int stokSebelum = alat.getStok();
-        int jumlahPinjam = peminjaman.getJumlahPinjam();
-        int stokSesudah = stokSebelum - jumlahPinjam;
-        
-        alat.setStok(stokSesudah);
-        
-        daftarPeminjaman.add(peminjaman);
-        
-        System.out.println(">> Peminjaman berhasil ditambahkan!");
-        System.out.println(">> Sisa stok " + alat.getNamaAlat() + ": " + alat.getStok());
     }
     
-    public void tampilkanPeminjaman() {
-        if (daftarPeminjaman.isEmpty()) {
-            System.out.println(">> Belum ada data peminjaman.");
-            return;
-        }
-        for (Peminjaman p : daftarPeminjaman) {
-            System.out.println("\n---------- Riwayat Peminjaman ----------");
-            System.out.println("ID Peminjaman: " + p.getIdPeminjaman());
-            System.out.println("Nama Petugas: " + p.getNamaPetugas());
-            System.out.println("Nama Alat: " + p.getNamaAlat());
-            System.out.println("Jumlah Pinjam: " + p.getJumlahPinjam());
-            System.out.println("Status: " + p.getStatus());
-        }
-    }
-    
-    public void kembalikanAlat(int idTarget, ArrayList<AlatGelas> rakGelas, ArrayList<AlatBedah> rakBedah, ArrayList<AlatUkur> rakUkur) {
-        for (Peminjaman p : daftarPeminjaman) {
-            if (p.getIdPeminjaman() == idTarget) {
-                if (p.getStatus().equals("Dikembalikan")) {
+    public void kembalikanAlat(int idTarget){
+        try(Connection conn = Koneksi.getConnection()){
+            if(conn == null){
+                System.out.println(">> Koneksi database gagal.");
+                return;
+            }
+            
+            conn.setAutoCommit(false);
+            
+            try{
+                Peminjaman p = peminjamanDAO.cariPeminjaman(conn, idTarget);
+                if(p == null){
+                    conn.rollback();
+                    System.out.println(">> ID Peminjaman tidak ditemukan.");
+                    return;
+                }
+                if("Dikembalikan".equals(p.getStatus())){
+                    conn.rollback();
                     System.out.println(">> Alat sudah dikembalikan.");
                     return;
                 }
+                int idAlat = alatDAO.cariIdAlat(conn, p.getNamaAlat());
                 
-                AlatLab alat = cariAlat (p.getNamaAlat(), rakGelas, rakBedah, rakUkur);
-                
-                if (alat != null) {
-                    alat.setStok(alat.getStok() + p.getJumlahPinjam());
-                }
-                p.setStatus("Dikembalikan");
-                
-                System.out.println(">> Alat berhasil dikembalikan!");
-                return;
-            }
-        }
-        System.out.println(">> ID peminjaman tidak ditemukan.");
-    }
-    
-    public void hapusPeminjaman(int idTarget) {
-        for (Peminjaman p : daftarPeminjaman) {
-            if (p.getIdPeminjaman() == idTarget) {
-                if (p.getStatus().equals("Dipinjam")) {
-                    System.out.println(">> Peminjaman masih aktif, alat harus dikembalikan terlebih dahulu.");
+                if(idAlat == -1){
+                    conn.rollback();
+                    System.out.println(">> Data alat tidak ditemukan.");
                     return;
                 }
-                daftarPeminjaman.remove(p);
                 
-                System.out.println(">> Data peminjaman berhasil dihapus!");
-                return;
+                boolean stokBerhasil = alatDAO.kembalikanStok(conn, idAlat, p.getJumlahPinjam());
+                
+                if(!stokBerhasil){
+                    conn.rollback();
+                    System.out.println(">> Gagal memulihkan stok alat.");
+                    return;
+                }
+                
+                boolean statusBerhasil = peminjamanDAO.ubahStatusDikembalikan(conn, idTarget);
+                
+                if(!statusBerhasil){
+                    conn.rollback();
+                    System.out.println(">> Status peminjaman gagal diperbarui.");
+                    return;
+                }
+                conn.commit();
+                
+                System.out.println(">> Alat berhasil dikembalikan!");
+                System.out.println(">> Stok alat berhasil dipulihkan.");
+            }catch(SQLException e){
+                conn.rollback();
+                System.out.println(">> Pengembalian gagal: " + e.getMessage());
+            }finally{
+                conn.setAutoCommit(true);
             }
+        }catch(SQLException e){
+            System.out.println(">> Koneksi database gagal: " + e.getMessage());
         }
-        System.out.println(">> ID peminjaman tidak ditemukan.");
     }
     
-    protected AlatLab cariAlat(String namaAlat, ArrayList<AlatGelas> rakGelas, ArrayList<AlatBedah> rakBedah, ArrayList<AlatUkur> rakUkur) {
-        if (namaAlat == null || namaAlat.trim().isEmpty()){
-            return null;
-        }
-        for (AlatGelas alat : rakGelas) {
-            if (alat.getNamaAlat().equalsIgnoreCase(namaAlat)) {
-                return alat;
+    public void hapusPeminjaman(int idTarget){
+        try(Connection conn = Koneksi.getConnection()){
+            if(conn == null){
+                System.out.println(">> Koneksi database gagal.");
+                return;
             }
-        }
-        for (AlatBedah alat : rakBedah) {
-            if (alat.getNamaAlat().equalsIgnoreCase(namaAlat)) {
-                return alat;
+            
+            conn.setAutoCommit(false);
+            
+            try{
+                Peminjaman p = peminjamanDAO.cariPeminjaman(conn, idTarget);
+                
+                if(p == null){
+                    conn.rollback();
+                    System.out.println(">> ID Peminjaman tidak ditemukan.");
+                    return;
+                }
+                if ("Dipinjam".equals(p.getStatus())){
+                    conn.rollback();
+                    System.out.println(">> Alat harus dikembalikan sebelum data dihapus.");
+                    return;
+                }
+                
+                boolean berhasil = peminjamanDAO.hapus(conn, idTarget);
+                
+                if(!berhasil){
+                    conn.rollback();
+                    System.out.println(">> Data peminjaman gagal dihapus.");
+                    return;
+                }
+                
+                conn.commit();
+                
+                System.out.println(">> Data peminjaman berhasil dihapus!");
+            }catch(SQLException e){
+                conn.rollback();
+                System.out.println(">> Gagal menghapus peminjaman: " + e.getMessage());
+            }finally{
+                conn.setAutoCommit(true);
             }
+        }catch(SQLException e){
+            System.out.println(">> Koneksi database gagal: " + e.getMessage());
         }
-        for (AlatUkur alat : rakUkur) {
-            if (alat.getNamaAlat().equalsIgnoreCase(namaAlat)) {
-                return alat;
-            }
-        }
-        return null;
     }
 }
