@@ -35,28 +35,53 @@ Saat program pertama kali di run, sistem akan memberikan output menu utama yang 
 <img width="542" height="775" alt="image" src="https://github.com/user-attachments/assets/caf33d9a-9a15-4683-a931-4c58fef0c7d8" />
 <img width="559" height="789" alt="image" src="https://github.com/user-attachments/assets/8b040aca-9a44-4648-8343-dc53854ff7ce" />
 
-
 ---
-
 
 ### 2. Tambah Peminjaman
-<p>Saat petugas ingin meminjam alat, mereka dapat memilih menu 2. Mereka lalu harus mengisi detail-detail seperti ID peminjaman, nama petugas, nama alat, dan jumlah yang dipinjam. Setelah data tersebut berhasil di input, sistem akan menampilkan pesan “Peminjaman berhasil ditambahkan” beserta pemberitahuan bahwa stok alat berhasil diperbarui, lalu balik ke menu awal.</p>
+<p>Saat petugas ingin meminjam alat, mereka dapat memilih menu 2. Mereka lalu harus mengisi detail-detail seperti ID peminjaman, nama petugas, nama alat, dan jumlah yang dipinjam. Setelah data tersebut berhasil di input, sistem akan menampilkan pesan “Peminjaman berhasil ditambahkan” beserta pemberitahuan bahwa stok alat berhasil dikurangi dan menampilkan sisa stok alatnya, lalu balik ke menu awal.</p>
 
-<img width="550" height="458" alt="image" src="https://github.com/user-attachments/assets/dc8e658d-1043-42ec-b2b9-517ab34904a4" />
+<img width="541" height="485" alt="image" src="https://github.com/user-attachments/assets/c353da76-93dc-4c5c-9a1d-bd0f1537896b" />
 
+<p>Setiap peminjaman alat akan memengaruhi stok. Dapat dilihat sebagai contoh, setelah petugas meminjam 3 termometer, stoknya berubah dari 4 menjadi 1.</p>
+<img width="378" height="155" alt="image" src="https://github.com/user-attachments/assets/58381420-38f0-421c-8234-5ff028921710" />
+<img width="342" height="151" alt="image" src="https://github.com/user-attachments/assets/64cc958d-60e8-4f0f-b216-9e20864daac3" />
 
-<p>Setiap peminjaman alat akan memengaruhi stok. Dapat dilihat sebagai contoh, setelah petugas meminjam 2 gelas beaker, stoknya berubah dari 5 menjadi 3.</p>
-<img width="405" height="156" alt="image" src="https://github.com/user-attachments/assets/1a4585df-662f-41d5-80a8-0daaba9d70b7" />
-<img width="357" height="151" alt="image" src="https://github.com/user-attachments/assets/f45bbcee-b4bf-4f71-b3a3-991122cd829c" />
 
 <p>Program ini memiliki pembatasan dalam proses peminjaman alat. Jika petugas mencoba meminjam alat yang tidak ada dalam daftar alat pada menu 1, sistem akan menampilkan pemberitahuan bahwa alat tersebut tidak ditemukan.</p>
-
-<img width="484" height="437" alt="image" src="https://github.com/user-attachments/assets/2eeec3f0-752c-427a-8f30-27a1e953cdb0" />
+<img width="470" height="433" alt="image" src="https://github.com/user-attachments/assets/b984b7b7-a767-4683-84aa-0a9648b476d9" />
 
 <p>Selain itu juga, jika petugas memasukkan jumlah peminjaman yang melebihi stok yang tersedia, sistem akan menampilkan peringatan bahwa stok alat tidak mencukupi dan menunjukkan jumlah stok yang tersedia.</p>
+<img width="489" height="481" alt="image" src="https://github.com/user-attachments/assets/d06dda30-35fd-4803-bd77-dd6850832e5b" />
 
 ---
 
+
+### 3. Tampilkan Riwayat Peminjaman
+<p>Petugas dapat melihat riwayat peminjaman alat di laboratorium pada menu 3. Menu ini akan menampilkan ID peminjaman, nama petugas, nama alat, dan jumlah alat yang telah dipinjam, serta status "Dipinjam" yang secara otomatis diberikan oleh sistem. Setelah menampilkan riwayat, program akan balik ke menu awal.</p>
+
+<img width="556" height="699" alt="image" src="https://github.com/user-attachments/assets/4af6726c-954a-486e-b2e1-9c0fa6910233" />
+
+
+---
+
+### 4. Kembalikan Alat
+<p>Setelah alat dikembalikan, petugas dapat memilih menu 4 untuk mencatat pengembalian alat tersebut. Setelah memasukkan ID peminjaman, sistem akan mencatat bahwa alat telah dikembalikan, dan balik ke menu awal.</p>
+
+<img width="465" height="340" alt="image" src="https://github.com/user-attachments/assets/9ff8571c-a5d5-4052-a77a-2633e30e7e0e" />
+
+<p>Habis melakukan pengembalian, status peminjaman alat dapat dilihat kembali melalui menu riwayat, dengan status yang otomatis diperbarui menjadi “Dikembalikan”.</p>
+
+<img width="422" height="140" alt="image" src="https://github.com/user-attachments/assets/618d0e5e-eb34-4e2e-b9b1-6330a26e3aa9" />
+
+---
+
+### 5. Hapus Peminjaman
+<p>Pada menu 5, riwayat peminjaman yang sudah lama dapat dihapus agar data yang tersimpan dalam program tidak terlalu banyak. Penghapusan dilakukan dengan memasukkan ID peminjaman, kemudian sistem akan menghapus data tersebut secara otomatis.</p>
+
+<img width="487" height="316" alt="image" src="https://github.com/user-attachments/assets/9a8bfe97-e644-4cc0-bdd3-707db4e18034" />
+
+
+---
 ## Penjelasan penerapan encapsulation dan Inheritance
 ## Penjelasan penerapan polymorphism dan abstraction
 ## Penjelasan penerapan JDBC
