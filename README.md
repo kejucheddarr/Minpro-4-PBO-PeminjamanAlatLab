@@ -80,8 +80,40 @@ Saat program pertama kali di run, sistem akan memberikan output menu utama yang 
 
 <img width="487" height="316" alt="image" src="https://github.com/user-attachments/assets/9a8bfe97-e644-4cc0-bdd3-707db4e18034" />
 
+<p>Data yang sudah dihapus tidak akan ditampilkan lagi pada menu riwayat.</p>
+
+<img width="464" height="555" alt="image" src="https://github.com/user-attachments/assets/99abc781-b68b-467f-a62b-4832271bb62c" />
+
+<p>Petugas tidak akan bisa menghapus riwayat peminjamannya jika mereka belum mengembalikan alat yang telah dipinjam.</p>
+<img width="501" height="306" alt="image" src="https://github.com/user-attachments/assets/fdd8bc88-503c-4861-b629-7a2ae2c7ed7b" />
 
 ---
+
+### 6. Keluar
+<p>Jika petugas ingin keluar dari program, mereka dapat memilih menu 6, dan pengulangan menu akan berhenti.</p>
+
+<img width="459" height="391" alt="image" src="https://github.com/user-attachments/assets/1347a4b8-6091-4804-a3e8-7c0e5e1afbe1" />
+
+---
+
 ## Penjelasan penerapan encapsulation dan Inheritance
+### Encapsulation (Enkapsulasi)
+<p>Enkapsulasi diterapkan pada class java pada package model, menggunakan access modifier protected pada atribut di class untuk membatasi akses langsung terhadap data dari luar class. Data tersebut kemudian hanya dapat diakses melalui method getter dan setter.</p>
+
+<img width="374" height="144" alt="image" src="https://github.com/user-attachments/assets/caa62325-cb10-4ca4-82ec-0d270784d8eb" />
+<img width="797" height="843" alt="image" src="https://github.com/user-attachments/assets/3e755e33-067f-410f-9de6-e2a3c7d98180" />
+
+---
+
+### Inheritance
+<p>Inheritance diimplementasikan pada java class AlatLab sebagai induk/superclass, dengan AlatBedah, AlatUkur, dan AlatGelas sebagai subclass yang mewarisi atribut dan method dari AlatLab.</p>
+
+<img width="824" height="291" alt="image" src="https://github.com/user-attachments/assets/e608d54a-e1e3-45c5-8b45-afa0945dfb06" />
+<img width="1014" height="186" alt="image" src="https://github.com/user-attachments/assets/10b03cea-4052-490e-b809-ed20be451977" />
+<img width="1044" height="190" alt="image" src="https://github.com/user-attachments/assets/c83174be-a3c6-4ee9-bc90-b62a3d96af56" />
+<img width="1021" height="188" alt="image" src="https://github.com/user-attachments/assets/ea8fb45e-76d0-464c-a165-b3f6db2cb626" />
+
+
+---
 ## Penjelasan penerapan polymorphism dan abstraction
 ## Penjelasan penerapan JDBC
