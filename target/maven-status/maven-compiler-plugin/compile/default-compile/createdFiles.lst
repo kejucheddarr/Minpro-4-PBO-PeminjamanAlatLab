@@ -1,0 +1,13 @@
+service\PeminjamanService.class
+model\AlatUkur.class
+model\AlatGelas.class
+dao\PeminjamanDAO.class
+model\AlatLab.class
+controller\PeminjamanController.class
+view\PeminjamanView.class
+view\PeminjamanViewImp.class
+model\AlatBedah.class
+dao\AlatLabDAO.class
+dao\Koneksi.class
+main\Laboratorium.class
+model\Peminjaman.class

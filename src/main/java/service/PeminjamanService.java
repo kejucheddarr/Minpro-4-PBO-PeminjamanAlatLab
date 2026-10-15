@@ -69,7 +69,14 @@ public class PeminjamanService {
                 
                 if(!stokBerhasil){
                     conn.rollback();
-                    System.out.println(">> Stok tidak mencukupi.");
+                    for (AlatLab alat : alatDAO.getSemuaAlat()){
+                        if(alat.getIdAlat() == idAlat){
+                            System.out.println(">> Stok tidak mencukupi.");
+                            System.out.println(">> Stok tersedia: " + alat.getStok());
+                            System.out.println(">> Jumlah yang ingin dipinjam: " + p.getJumlahPinjam());
+                            break;
+                        }
+                    }
                     return;
                 }
                 
@@ -84,7 +91,14 @@ public class PeminjamanService {
                 conn.commit();
                 
                 System.out.println(">> Peminjaman berhasil ditambahkan!");
-                System.out.println(">> Stok alat berhasil diperbarui.");
+                System.out.println(">> Stok alat berhasil dikurangi.");
+                
+                for(AlatLab alat : alatDAO.getSemuaAlat()){
+                    if(alat.getIdAlat() == idAlat) {
+                        System.out.println(">> Sisa stok " + alat.getNamaAlat() + ": " + alat.getStok());
+                        break;
+                    }
+                }
             }catch(SQLException e){
                 conn.rollback();
                 System.out.println(">> Peminjaman gagal: " + e.getMessage());
