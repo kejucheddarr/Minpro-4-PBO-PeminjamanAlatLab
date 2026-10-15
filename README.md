@@ -96,7 +96,7 @@ Saat program pertama kali di run, sistem akan memberikan output menu utama yang 
 
 ---
 
-## Penjelasan penerapan encapsulation dan Inheritance
+## Penjelasan penerapan Encapsulation dan Inheritance
 ### Encapsulation (Enkapsulasi)
 <p>Enkapsulasi diterapkan pada class java pada package model, menggunakan access modifier protected pada atribut di class untuk membatasi akses langsung terhadap data dari luar class. Data tersebut kemudian hanya dapat diakses melalui method getter dan setter.</p>
 
@@ -113,7 +113,46 @@ Saat program pertama kali di run, sistem akan memberikan output menu utama yang 
 <img width="1044" height="190" alt="image" src="https://github.com/user-attachments/assets/c83174be-a3c6-4ee9-bc90-b62a3d96af56" />
 <img width="1021" height="188" alt="image" src="https://github.com/user-attachments/assets/ea8fb45e-76d0-464c-a165-b3f6db2cb626" />
 
+---
+
+## Penjelasan penerapan Polymorphism dan Abstraction
+### Polymorphism
+<p>Polymorphism diterapkan dengan method overriding, yang diimplementasikan pada method tampilkanInfo() dari class AlatLab dan dioverride oleh class AlatBedah, AlatUkur, dan AlatGelas.</p>
+
+<img width="443" height="57" alt="image" src="https://github.com/user-attachments/assets/f9180306-323f-465c-bf9b-ea3f1f7a01e9" />
+<img width="597" height="202" alt="image" src="https://github.com/user-attachments/assets/478d59bb-6a6e-40ea-9723-393acdfe7669" />
+<img width="572" height="215" alt="image" src="https://github.com/user-attachments/assets/c1755ce0-9ecc-4f65-9064-717b3ad7201c" />
+<img width="569" height="205" alt="image" src="https://github.com/user-attachments/assets/b95649a2-6b2e-42f6-93f1-34a5d58459e3" />
 
 ---
-## Penjelasan penerapan polymorphism dan abstraction
+
+### Abstraction
+<p>Abstraction adalah teknik menyederhanakan suatu objek dengan cara menonjolkan atribut yang penting dan menyembunyikan detail implementasinya. Dalam project ini, abstraction diterapkan melalui abstract class AlatLab. Class ini berfungsi sebagai templat utama yang mendefinisikan atribut dan metode dasar untuk seluruh jenis peralatan laboratorium.</p>
+
+<img width="382" height="131" alt="image" src="https://github.com/user-attachments/assets/562215f8-8b47-47cd-92de-50508b6338e3" />
+
+<p>Metode tampilkanInfo() dideklarasikan sebagai abstract method, agar setiap subclass (AlatGelas, AlatBedah, dan AlatUkur) wajib mengimplementasikannya sesuai dengan karakteristik masing-masing alat.</p>
+
+<img width="443" height="57" alt="image" src="https://github.com/user-attachments/assets/f9180306-323f-465c-bf9b-ea3f1f7a01e9" />
+
+---
+
+## Penjelasan penerapan Interface
+<p>Interface merupakan struktur yang digunakan untuk mendefinisikan method yang harus diimplementasikan oleh suatu class. Interface diimplementasikan melalui PeminjamanView, untuk mendefinisikan method yang digunakan dalam proses tampilan dan input program. Interface tersebut kemudian diimplementasikan oleh PeminjamanViewImp menggunakan keyword implements.</p>
+
+<img width="611" height="161" alt="image" src="https://github.com/user-attachments/assets/bbeb4e60-8dfd-4b13-b4df-3ab2f5cf18cc" />
+<img width="811" height="761" alt="image" src="https://github.com/user-attachments/assets/80efc404-165a-4184-844d-7fb801a4f5a2" />
+
+---
+
 ## Penjelasan penerapan JDBC
+<p>Dalam project ini, JDBC digunakan untuk menghubungkan program Java dengan database MySQL.</p>
+
+<img width="908" height="398" alt="image" src="https://github.com/user-attachments/assets/1c70fe0c-987d-48d6-9806-8716f532ade6" />
+
+<p>JDBC memungkinkan program mengambil data alat laboratorium dari database, menyimpan catatan peminjaman, memperbarui jumlah stok alat ketika alat dipinjam atau dikembalikan, dan menampilkan riwayat penggunaan alat tersebut. Proses pengelolaan data dilakukan dengan menggunakan class DAO, yang menghubungkan ke database melalui PreparedStatement dan ResultSet.</p>
+
+<img width="1081" height="858" alt="image" src="https://github.com/user-attachments/assets/806820a2-cf96-477f-a9dc-7dc5664397fa" />
+<img width="1068" height="891" alt="image" src="https://github.com/user-attachments/assets/11a9fecf-4f47-47e8-b107-660d7e594728" />
+<img width="423" height="282" alt="image" src="https://github.com/user-attachments/assets/1b7af84c-d8b4-4d11-8968-2678274cc6d8" />
+<img width="741" height="513" alt="image" src="https://github.com/user-attachments/assets/51f159f8-81cd-4496-87c7-20c5d0a9f747" />
